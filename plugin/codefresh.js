@@ -1,7 +1,9 @@
+const request = require('request-promise');
+
 class Codefresh {
     /**
      *
-     * @return {{buildTrigger: *, buildInitiator: *, buildId: *, buildTimestamp: *, buildUrl: *, repoOwner: *, repoName: *, branch: *, revision: *, commitAuthor: *, commitUrl: *, commitMessage: *}}
+     * @return {{buildTrigger: *, buildInitiator: *, buildId: *, buildTimestamp: *, buildUrl: *, repoOwner: *, repoName: *, branch: *, revision: *, commitAuthor: *, commitUrl: *, commitMessage: *, apiKey: *}}
      */
     static get info() {
         return {
@@ -17,7 +19,24 @@ class Codefresh {
             commitAuthor: process.env.CF_COMMIT_AUTHOR,
             commitUrl: process.env.CF_COMMIT_URL,
             commitMessage: process.env.CF_COMMIT_MESSAGE,
+            apiKey: process.env.CF_API_KEY,
         };
+    }
+
+    static async buildStatus(buildId, token) {
+        const data = await request({
+            uri: `https://g.codefresh.io/api/workflow/${buildId}/context-revision`,
+            method: 'GET',
+            headers: {
+                'x-access-token': token,
+            },
+            json: true,
+        });
+
+        // console.log(Object.entries(data.pop().context.stepsMetadata).map(item => item[1].status));
+
+        return Object.entries(data.pop().context.stepsMetadata)
+            .every(item => item[1].status !== 'failure');
     }
 }
 
