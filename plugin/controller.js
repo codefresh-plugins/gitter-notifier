@@ -17,12 +17,12 @@ class Controller {
         this.sendNotify = this.sendNotify.bind(this);
     }
 
-    sendNotify() {
+    async sendNotify() {
         if (this._message) {
             return this._sendMessage(this._message);
         }
 
-        return this._sendStatus();
+        return await this._sendStatus();
     }
 
     _sendGitter(message, type) {
@@ -44,16 +44,20 @@ class Controller {
         return this._sendGitter(message, this._status);
     }
 
-    _sendStatus() {
+    async _sendStatus() {
         const file = path.join(__dirname, '../messages/buildStatus.md');
         const data = fs.readFileSync(file, 'utf8');
         const template = Handlebars.compile(data);
 
-        const statusTitle = this._status === 'ok' ? 'Build successful' : 'Build failed';
+        const buildCauses = await Codefresh.buildCauses(Codefresh.info.buildId, Codefresh.info.apiKey);
 
-        const message = template({ ...Codefresh.info, title: statusTitle });
+        const message = template({
+            ...Codefresh.info,
+            failure: !!buildCauses.length,
+            buildCauses
+        });
 
-        return this._sendGitter(message, this._status);
+        return await this._sendGitter(message, buildCauses.length ? 'error' : 'ok');
     }
 }
 

@@ -23,7 +23,7 @@ class Codefresh {
         };
     }
 
-    static async buildStatus(buildId, token) {
+    static async buildCauses(buildId, token) {
         const data = await request({
             uri: `https://g.codefresh.io/api/workflow/${buildId}/context-revision`,
             method: 'GET',
@@ -33,10 +33,8 @@ class Codefresh {
             json: true,
         });
 
-        // console.log(Object.entries(data.pop().context.stepsMetadata).map(item => item[1].status));
-
         return Object.entries(data.pop().context.stepsMetadata)
-            .every(item => item[1].status !== 'failure');
+            .reduce((accumulator, [step, stepInfo]) => stepInfo.status === 'failure' ? [...accumulator, step] : accumulator, []);
     }
 }
 
