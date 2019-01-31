@@ -6,6 +6,7 @@ Gitter plugin which gives the opportunity send any messages to activity feed.
 
 ```yaml
 version: '1.0'
+fail_fast: false
 ...
 steps:
   ...
@@ -21,11 +22,12 @@ steps:
 
 ## Optional variables
 
+**if you not provide this variables, plugin send info about build**
+
 - `GITTER_STATUS`
   - **ok** - for info messages
   - **error** - for error messages (red icon, red text)
-- `GITTER_MESSAGE` - text of custom message which will be send, with [Handlebars.js](https://github.com/wycats/handlebars.js/)
-  - **if you not provide this variable, plugin send info about build** 
+- `GITTER_MESSAGE` - text of custom message which will be send, with [Handlebars.js](https://github.com/wycats/handlebars.js/) 
   - available vars:
       - `{{buildTrigger}}` 
       - `{{buildInitiator}}`  
