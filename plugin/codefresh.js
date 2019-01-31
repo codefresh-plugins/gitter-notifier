@@ -34,7 +34,8 @@ class Codefresh {
         });
 
         return Object.entries(data.pop().context.stepsMetadata)
-            .reduce((accumulator, [step, stepInfo]) => stepInfo.status === 'failure' ? [...accumulator, step] : accumulator, []);
+            .filter(([, stepInfo]) => stepInfo.status === 'failure')
+            .map(([step]) => step);
     }
 }
 
