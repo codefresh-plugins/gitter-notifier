@@ -32,7 +32,7 @@ class Controller {
             json: true,
             body: {
                 message: message,
-                status: type,
+                level: type,
             },
         });
     }
@@ -57,7 +57,7 @@ class Controller {
             buildCauses
         });
 
-        return await this._sendGitter(message, buildCauses.length ? 'error' : 'ok');
+        return await this._sendGitter(message, buildCauses.length ? 'error' : 'info');
     }
 }
 
