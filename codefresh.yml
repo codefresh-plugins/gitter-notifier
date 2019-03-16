@@ -5,7 +5,7 @@ steps:
     title: Building Docker Image
     type: build
     dockerfile: Dockerfile
-    image_name: codefresh/gitternotifier
+    image_name: codefreshplugins/gitternotifier
     metadata:
       set:
       - CF_QUALITY: true
