@@ -5,7 +5,7 @@ steps:
     title: Building Docker Image
     type: build
     dockerfile: Dockerfile
-    image_name: codefreshplugins/gitternotifier
+    image_name: codefreshplugins/gitter-notifier
     metadata:
       set:
       - CF_QUALITY: true
@@ -14,7 +14,7 @@ steps:
     title: Pushing to dockerhub
     type: push
     candidate: '${{BuildingDockerImage}}'
-    tag: latest
+    tag: "0.1"
     registry: dockerhub
     when:
       branch:
