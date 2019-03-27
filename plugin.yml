@@ -1,6 +1,8 @@
 image: codefreshplugins/gitternotifier
 version: 0.1.0
-description: Send message to gitter room
+description: Send message to gitter 
+categories:
+  - messaging
 keywords:
   - gitter
 sources:
