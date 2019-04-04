@@ -10,7 +10,7 @@ sources:
 maintainers: # (optional)
   - name: Andrii Shaforostov
     email: andrii@codefresh.io
-icon: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Font_Awesome_5_brands_gitter.svg/109px-Font_Awesome_5_brands_gitter.svg.png
+icon: https://raw.githubusercontent.com/codefresh-plugins/gitter-notifier/master/gitter-logo.jpg
 envs:
   - name: GITTER_WEBHOOK
     type: required
