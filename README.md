@@ -11,7 +11,7 @@ fail_fast: false
 steps:
   ...
   sendMessage:
-    image: codefresh/gitternotifier
+    image: codefreshplugins/gitternotifier
     environment:
       - GITTER_WEBHOOK=https://webhooks.gitter.im/e/123abc
 ```
